@@ -1,3 +1,3 @@
 # HFDiscrim
 
-![image](https://github.com/yachliu/HFDiscrim/blob/main/images/workflow.png)
+![image](https://github.com/yachliu/HFDiscrim/blob/main/images/hfdiscrim-logo.jpg)
