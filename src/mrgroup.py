@@ -72,10 +72,11 @@ def get_cmrg_messages(precur_ids: list, db_fpath: str, feature2ndscore_fpath: st
         run_maxids = p_table.groupby('RUN_ID')['NORM_DSCORE'].idxmax()
 
         for p_best_peak_ind in run_maxids:
+        # p_best_peak_ind = p_table['NORM_DSCORE'].idxmax()
             # p_best_peak_ind = np.argmax(p_table["NORM_DSCORE"].values)
-            m_nds = p_table.iloc[p_best_peak_ind]["NORM_DSCORE"]
-            m_nrt = p_table.iloc[p_best_peak_ind]["NORM_RT"]
-            m_id = p_table.iloc[p_best_peak_ind]["ID"]
+            m_nds = p_table.loc[p_best_peak_ind]["NORM_DSCORE"]
+            m_nrt = p_table.loc[p_best_peak_ind]["NORM_RT"]
+            m_id = p_table.loc[p_best_peak_ind]["ID"]
             p_nrts_diff = np.abs(p_table["NORM_RT"].values - m_nrt)
             p_nrt_labels = p_nrts_diff < nrt_width / 2
             sp_table = p_table.loc[p_nrt_labels, :].copy()
@@ -109,6 +110,8 @@ def get_cmrg_messages(precur_ids: list, db_fpath: str, feature2ndscore_fpath: st
                     tmp = np.zeros(17)
                     diag_vector = np.diag(pear_matrix)
                     for ii, pears in enumerate(pear_matrix):
+                        if ii >= 7:
+                            break
                         tmp[ii] = pears[np.argsort(pears)[::-1][1]]
                     tmp[7: 7 + len(pear_matrix.mean(axis = 0))] = pear_matrix.mean(axis = 0)
                     tmp[14] = 1 - cosine(m_intens, c_intens)
